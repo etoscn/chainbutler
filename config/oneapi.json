@@ -1,0 +1,2288 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "ChainButlerAPI",
+    "title": "ChainButler API",
+    "termsOfService": "http://chainbutler.cn",
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.chainbutler.io/support",
+      "email": "admin@etos.cm"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/app/address/recharge": {
+      "post": {
+        "description": "地址充值",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "text/csv"
+        ],
+        "tags": [
+          "App"
+        ],
+        "summary": "地址充值",
+        "operationId": "appAddressRecharge",
+        "parameters": [
+          {
+            "description": "充值",
+            "name": "充值",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.ParamRechargeBlockchain"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.SuccessError"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/app/address/{current}/{pageSize}": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "查询地址",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "App"
+        ],
+        "summary": "查询地址",
+        "operationId": "appAddress",
+        "parameters": [
+          {
+            "type": "integer",
+            "default": 1,
+            "description": "页吗",
+            "name": "current",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "default": 10,
+            "description": "总量 max 100",
+            "name": "pageSize",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "搜索",
+            "name": "搜索",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.ParamAddress"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.AddressData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/app/balance/{current}/{pageSize}": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "获取余额",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "App"
+        ],
+        "summary": "获取余额",
+        "operationId": "appBalance",
+        "parameters": [
+          {
+            "type": "integer",
+            "default": 1,
+            "description": "页吗",
+            "name": "current",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "default": 10,
+            "description": "总量 max 100",
+            "name": "pageSize",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "搜索",
+            "name": "搜索",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.ParamAppBalance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.BalanceData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/app/create": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "创建APP",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "App"
+        ],
+        "summary": "创建APP",
+        "operationId": "appCreate",
+        "parameters": [
+          {
+            "description": "搜索",
+            "name": "搜索",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.ParamApp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.AppData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/app/export/mnemonic": {
+      "post": {
+        "description": "导出助记词",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "text/csv"
+        ],
+        "tags": [
+          "App"
+        ],
+        "summary": "导出助记词",
+        "operationId": "appExportMnemonic",
+        "parameters": [
+          {
+            "description": "搜索",
+            "name": "搜索",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.ParamExportMnemonic"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/app/me": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "我的APP",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "App"
+        ],
+        "summary": "我的APP",
+        "operationId": "appMe",
+        "parameters": [
+          {
+            "description": "搜索",
+            "name": "搜索",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.ParamApp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.AppData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/app/order/audit": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "审核订单",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "App"
+        ],
+        "summary": "审核订单",
+        "operationId": "appAuditOrder",
+        "parameters": [
+          {
+            "description": "审核",
+            "name": "审核",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.AuditOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.SuccessError"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/app/order/{current}/{pageSize}": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "搜索订单",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "App"
+        ],
+        "summary": "搜索订单",
+        "operationId": "appSearchOrder",
+        "parameters": [
+          {
+            "type": "integer",
+            "default": 1,
+            "description": "页吗",
+            "name": "current",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "default": 10,
+            "description": "总量 max 100",
+            "name": "pageSize",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "搜索",
+            "name": "搜索",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.SearchOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.OrderData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/app/update/{id}": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "修改APP",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "App"
+        ],
+        "summary": "修改APP",
+        "operationId": "appUpdate",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "修改",
+            "name": "修改",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.ParamApp"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.AppData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "获取令牌",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Auth"
+        ],
+        "summary": "获取令牌",
+        "operationId": "authLogin",
+        "parameters": [
+          {
+            "description": "登陆账号",
+            "name": "登陆账号",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/types.LoginAccount"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.Token"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "description": "注册",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Auth"
+        ],
+        "summary": "注册",
+        "operationId": "authRegister",
+        "parameters": [
+          {
+            "description": "登陆账号",
+            "name": "登陆账号",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/types.RegisterAccount"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.User"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/blockchain/search": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "搜索符号",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Blockchain"
+        ],
+        "summary": "搜索符号",
+        "operationId": "searchBlockChain",
+        "parameters": [
+          {
+            "description": "搜索",
+            "name": "搜索",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/types.ParamSearchBlockchain"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/types.BlockChainData"
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/blockchain/tx/{blockchain}/{current}/{pageSize}": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "浏览交易",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Blockchain"
+        ],
+        "summary": "浏览交易",
+        "operationId": "getBlockchainTx",
+        "parameters": [
+          {
+            "enum": [
+              "ethereum",
+              "smartchain",
+              "tron",
+              "heco"
+            ],
+            "type": "string",
+            "description": "区块名称",
+            "name": "blockchain",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "default": 1,
+            "description": "页吗",
+            "name": "current",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "default": 10,
+            "description": "总量 max 100",
+            "name": "pageSize",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "搜索",
+            "name": "搜索",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.ParamTx"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.TxData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/blockchain/type": {
+      "get": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "区块链类型",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Blockchain"
+        ],
+        "summary": "区块链类型",
+        "operationId": "getBlockchainType",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.BlockChainTypeData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/blockchain/{blockchain}/{current}/{pageSize}": {
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "区块链符号",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Blockchain"
+        ],
+        "summary": "区块链符号",
+        "operationId": "getBlockchain",
+        "parameters": [
+          {
+            "enum": [
+              "ethereum",
+              "smartchain",
+              "tron",
+              "heco"
+            ],
+            "type": "string",
+            "description": "区块名称",
+            "name": "blockchain",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "default": 1,
+            "description": "页吗",
+            "name": "current",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "default": 10,
+            "description": "总量 max 100",
+            "name": "pageSize",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "搜索",
+            "name": "搜索",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/types.ParamBlockChain"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.BlockChainData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/user/me": {
+      "get": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "个人信息",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "User"
+        ],
+        "summary": "个人信息",
+        "operationId": "userMe",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.User"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/user/totp": {
+      "get": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "获取TOTP",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "User"
+        ],
+        "summary": "获取TOTP",
+        "operationId": "userNewTotp",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.GoogAuth"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "description": "绑定TOTP 不支持重复绑定和挂失",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "User"
+        ],
+        "summary": "绑定TOTP",
+        "operationId": "userBindingTotp",
+        "parameters": [
+          {
+            "description": "绑定TOTP",
+            "name": "绑定TOTP",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/types.TotpBinding"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.SuccessError"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/wallet/address": {
+      "get": {
+        "description": "获取地址",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "获取地址",
+        "operationId": "walletAddress",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "签名",
+            "name": "sign",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.Address"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/wallet/balance/view/{blockchain}/{address}": {
+      "get": {
+        "description": "查看余额",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "查看余额",
+        "operationId": "walletViewBalance",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "签名",
+            "name": "sign",
+            "in": "header",
+            "required": true
+          },
+          {
+            "enum": [
+              "ethereum",
+              "smartchain",
+              "tron",
+              "heco"
+            ],
+            "type": "string",
+            "description": "区块名称",
+            "name": "blockchain",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "地址",
+            "name": "address",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "合约",
+            "name": "contract",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.Balance"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/wallet/balance/{blockchain}/{address}": {
+      "get": {
+        "description": "获取余额批量",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "获取余额批量",
+        "operationId": "walletAddressBalance",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "签名",
+            "name": "sign",
+            "in": "header",
+            "required": true
+          },
+          {
+            "enum": [
+              "ethereum",
+              "smartchain",
+              "tron",
+              "heco"
+            ],
+            "type": "string",
+            "description": "区块名称",
+            "name": "blockchain",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "地址",
+            "name": "address",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.BalanceData"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/wallet/send/{blockchain}": {
+      "post": {
+        "description": "发送余额",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "发送余额",
+        "operationId": "walletSendBalance",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "签名",
+            "name": "sign",
+            "in": "header",
+            "required": true
+          },
+          {
+            "enum": [
+              "ethereum",
+              "smartchain",
+              "tron",
+              "heco"
+            ],
+            "type": "string",
+            "description": "区块名称",
+            "name": "blockchain",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "发送",
+            "name": "发送",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/types.BalanceSend"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.Order"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    },
+    "/wallet/sign": {
+      "post": {
+        "description": "获取签名 此方法仅测试使用 为了提高效率建议离线签名\n离线签名\n{\n\"alg\": \"HS512\",\n\"typ\": \"JWT\"\n}.{\n\"app_id\": int,\n\"exp\": int\n}.[secret Signature]",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Wallet"
+        ],
+        "summary": "获取签名",
+        "operationId": "walletSign",
+        "parameters": [
+          {
+            "description": "APP密钥",
+            "name": "获取签名",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/types.AppSign"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/types.WalletSign"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/types.HTTPError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "types.Address": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "description": "APPID",
+          "type": "integer"
+        },
+        "created_at": {
+          "description": "创建时间",
+          "type": "string"
+        },
+        "ethereum": {
+          "description": "以太链 币安 火币",
+          "type": "string"
+        },
+        "id": {
+          "description": "内部ID",
+          "type": "integer"
+        },
+        "tron": {
+          "description": "波场链",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "更新时间",
+          "type": "string"
+        }
+      }
+    },
+    "types.AddressData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "地址数组",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Address"
+          }
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean"
+        },
+        "total": {
+          "description": "总数",
+          "type": "integer"
+        }
+      }
+    },
+    "types.App": {
+      "type": "object",
+      "properties": {
+        "callback": {
+          "description": "回调地址",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "创建时间",
+          "type": "string"
+        },
+        "ethereum": {
+          "description": "以太链 币安 火币 归集地址",
+          "type": "string"
+        },
+        "expire_at": {
+          "description": "到期时间",
+          "type": "string"
+        },
+        "id": {
+          "description": "内部ID",
+          "type": "integer"
+        },
+        "name": {
+          "description": "名称",
+          "type": "string"
+        },
+        "note": {
+          "description": "说明",
+          "type": "string"
+        },
+        "recharge_address": {
+          "description": "充值地址",
+          "$ref": "#/definitions/types.AppAddress"
+        },
+        "renewals_address": {
+          "description": "续订地址",
+          "$ref": "#/definitions/types.AppAddress"
+        },
+        "secret": {
+          "description": "SECRET",
+          "type": "string"
+        },
+        "tron": {
+          "description": "波场汇集地址",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "更新时间",
+          "type": "string"
+        },
+        "user_id": {
+          "description": "用户",
+          "type": "integer"
+        }
+      }
+    },
+    "types.AppAddress": {
+      "type": "object",
+      "properties": {
+        "ethereum": {
+          "type": "string"
+        },
+        "tron": {
+          "type": "string"
+        }
+      }
+    },
+    "types.AppData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "APP数组",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.App"
+          }
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean"
+        },
+        "total": {
+          "description": "总数",
+          "type": "integer"
+        }
+      }
+    },
+    "types.AppSign": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "description": "APPID",
+          "type": "integer"
+        },
+        "secret": {
+          "description": "SECRET",
+          "type": "string"
+        }
+      }
+    },
+    "types.AuditOrder": {
+      "type": "object",
+      "required": [
+        "id",
+        "pass",
+        "totp_password"
+      ],
+      "properties": {
+        "id": {
+          "description": "订单内部ID",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "pass": {
+          "description": "是否通过",
+          "type": "boolean"
+        },
+        "totp_password": {
+          "description": "totp密码",
+          "type": "string"
+        }
+      }
+    },
+    "types.Balance": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "地址",
+          "type": "string"
+        },
+        "app_id": {
+          "description": "APPID",
+          "type": "integer"
+        },
+        "balance": {
+          "description": "余额",
+          "type": "string"
+        },
+        "blockchain": {
+          "description": "链名称",
+          "type": "string"
+        },
+        "chain_balance": {
+          "description": "链上余额",
+          "type": "string"
+        },
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "创建时间",
+          "type": "string"
+        },
+        "id": {
+          "description": "内部ID",
+          "type": "integer"
+        },
+        "symbol": {
+          "description": "符号",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "更新时间",
+          "type": "string"
+        }
+      }
+    },
+    "types.BalanceData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "余额数组",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Balance"
+          }
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean"
+        },
+        "total": {
+          "description": "总数",
+          "type": "integer"
+        }
+      }
+    },
+    "types.BalanceSend": {
+      "type": "object",
+      "required": [
+        "from",
+        "to",
+        "value"
+      ],
+      "properties": {
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "description": {
+          "description": "描述",
+          "type": "string"
+        },
+        "from": {
+          "description": "发送着",
+          "type": "string"
+        },
+        "out_trade_no": {
+          "description": "内部订单号",
+          "type": "string"
+        },
+        "to": {
+          "description": "接收",
+          "type": "string"
+        },
+        "value": {
+          "description": "数量",
+          "type": "string"
+        }
+      }
+    },
+    "types.BlockChain": {
+      "type": "object",
+      "properties": {
+        "blockchain": {
+          "description": "名称 链名称",
+          "type": "string"
+        },
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "创建时间",
+          "type": "string"
+        },
+        "decimals": {
+          "description": "精度",
+          "type": "integer"
+        },
+        "explorer": {
+          "description": "浏览器",
+          "type": "string"
+        },
+        "id": {
+          "description": "内部ID",
+          "type": "integer"
+        },
+        "name": {
+          "description": "名称",
+          "type": "string"
+        },
+        "status": {
+          "description": "状态 active有效 abandoned关闭",
+          "type": "string"
+        },
+        "symbol": {
+          "description": "符号",
+          "type": "string"
+        },
+        "type": {
+          "description": "类型",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "更新时间",
+          "type": "string"
+        }
+      }
+    },
+    "types.BlockChainData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "符号数组",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.BlockChain"
+          }
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean"
+        },
+        "total": {
+          "description": "总数",
+          "type": "integer"
+        }
+      }
+    },
+    "types.BlockChainType": {
+      "type": "object",
+      "properties": {
+        "blockchain": {
+          "description": "链名称",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "创建时间",
+          "type": "string"
+        },
+        "decimals": {
+          "description": "精度",
+          "type": "integer"
+        },
+        "explorer_address": {
+          "description": "地址浏览",
+          "type": "string"
+        },
+        "explorer_block": {
+          "description": "快浏览",
+          "type": "string"
+        },
+        "explorer_tx": {
+          "description": "交易浏览",
+          "type": "string"
+        },
+        "id": {
+          "description": "内部ID",
+          "type": "integer"
+        },
+        "name": {
+          "description": "名称",
+          "type": "string"
+        },
+        "symbol": {
+          "description": "符号",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "更新时间",
+          "type": "string"
+        }
+      }
+    },
+    "types.BlockChainTypeData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "类型数组",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.BlockChainType"
+          }
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean"
+        },
+        "total": {
+          "description": "总数",
+          "type": "integer"
+        }
+      }
+    },
+    "types.GoogAuth": {
+      "type": "object",
+      "properties": {
+        "secret": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        }
+      }
+    },
+    "types.HTTPError": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "object"
+        }
+      }
+    },
+    "types.LoginAccount": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "description": "邮箱",
+          "type": "string"
+        },
+        "password": {
+          "description": "密码",
+          "type": "string"
+        }
+      }
+    },
+    "types.Order": {
+      "type": "object",
+      "required": [
+        "from",
+        "to",
+        "value"
+      ],
+      "properties": {
+        "app_id": {
+          "description": "APPID",
+          "type": "integer"
+        },
+        "blockchain": {
+          "description": "链名称",
+          "type": "string"
+        },
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "创建时间",
+          "type": "string"
+        },
+        "description": {
+          "description": "描述",
+          "type": "string"
+        },
+        "from": {
+          "description": "发送着",
+          "type": "string"
+        },
+        "id": {
+          "description": "内部ID",
+          "type": "integer"
+        },
+        "internal": {
+          "description": "内部交易",
+          "type": "boolean"
+        },
+        "notify": {
+          "description": "是否通知",
+          "type": "boolean"
+        },
+        "out_trade_no": {
+          "description": "内部订单号",
+          "type": "string"
+        },
+        "status": {
+          "description": "状态 waiting 等待 running 处理中 failed 失败 success 成功",
+          "type": "string"
+        },
+        "symbol": {
+          "description": "符号",
+          "type": "string"
+        },
+        "to": {
+          "description": "接收",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "更新时间",
+          "type": "string"
+        },
+        "value": {
+          "description": "数量",
+          "type": "string"
+        }
+      }
+    },
+    "types.OrderData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "订单数组",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Order"
+          }
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean"
+        },
+        "total": {
+          "description": "总数",
+          "type": "integer"
+        }
+      }
+    },
+    "types.ParamAddress": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "description": "APPID",
+          "type": "integer"
+        },
+        "ethereum": {
+          "description": "以太链",
+          "type": "string"
+        },
+        "tron": {
+          "description": "波场链",
+          "type": "string"
+        }
+      }
+    },
+    "types.ParamApp": {
+      "type": "object",
+      "required": [
+        "totp_password"
+      ],
+      "properties": {
+        "callback": {
+          "description": "回调地址",
+          "type": "string"
+        },
+        "ethereum": {
+          "description": "以太链 币安 火币 归集地址",
+          "type": "string"
+        },
+        "name": {
+          "description": "名称",
+          "type": "string"
+        },
+        "secret": {
+          "description": "SECRET 仅用于搜索",
+          "type": "string"
+        },
+        "status": {
+          "description": "状态 active有效 abandoned关闭",
+          "type": "string"
+        },
+        "totp_password": {
+          "description": "totp密码 修改是必须提供",
+          "type": "string"
+        },
+        "tron": {
+          "description": "波场汇集地址",
+          "type": "string"
+        }
+      }
+    },
+    "types.ParamAppBalance": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "地址",
+          "type": "string"
+        },
+        "app_id": {
+          "description": "APPID",
+          "type": "integer"
+        },
+        "blockchain": {
+          "description": "链名称",
+          "type": "string"
+        },
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "symbol": {
+          "description": "符号",
+          "type": "string"
+        }
+      }
+    },
+    "types.ParamBlockChain": {
+      "type": "object",
+      "properties": {
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "status": {
+          "description": "状态 active有效 abandoned关闭",
+          "type": "string"
+        },
+        "symbol": {
+          "description": "符号",
+          "type": "string"
+        },
+        "type": {
+          "description": "类型",
+          "type": "string"
+        }
+      }
+    },
+    "types.ParamExportMnemonic": {
+      "type": "object",
+      "required": [
+        "id",
+        "totp_password"
+      ],
+      "properties": {
+        "id": {
+          "description": "地址内部ID",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "totp_password": {
+          "description": "totp密码",
+          "type": "string"
+        }
+      }
+    },
+    "types.ParamRechargeBlockchain": {
+      "type": "object",
+      "required": [
+        "address",
+        "blockchain",
+        "totp_password",
+        "type"
+      ],
+      "properties": {
+        "address": {
+          "description": "地址",
+          "type": "string"
+        },
+        "balance": {
+          "description": "余额",
+          "type": "string"
+        },
+        "blockchain": {
+          "description": "链名称",
+          "type": "string"
+        },
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "totp_password": {
+          "description": "totp密码",
+          "type": "string"
+        },
+        "type": {
+          "description": "充值类型 +、-",
+          "type": "string"
+        }
+      }
+    },
+    "types.ParamSearchBlockchain": {
+      "type": "object",
+      "required": [
+        "blockchain"
+      ],
+      "properties": {
+        "blockchain": {
+          "description": "链名称",
+          "type": "string"
+        },
+        "keywords": {
+          "description": "关键词 符号、合约",
+          "type": "string"
+        }
+      }
+    },
+    "types.ParamTx": {
+      "type": "object",
+      "properties": {
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "from": {
+          "description": "发送着",
+          "type": "string"
+        },
+        "number": {
+          "description": "高度",
+          "type": "integer"
+        },
+        "symbol": {
+          "description": "符号",
+          "type": "string"
+        },
+        "to": {
+          "description": "接收",
+          "type": "string"
+        },
+        "tx": {
+          "description": "哈希",
+          "type": "string"
+        }
+      }
+    },
+    "types.RegisterAccount": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "description": "邮箱",
+          "type": "string"
+        },
+        "password": {
+          "description": "密码",
+          "type": "string"
+        }
+      }
+    },
+    "types.SearchOrder": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "description": "APPID",
+          "type": "integer"
+        },
+        "blockchain": {
+          "description": "链名称",
+          "type": "string"
+        },
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "description": {
+          "description": "描述",
+          "type": "string"
+        },
+        "from": {
+          "description": "发送着",
+          "type": "string"
+        },
+        "out_trade_no": {
+          "description": "内部订单号",
+          "type": "string"
+        },
+        "status": {
+          "description": "Internal    bool   `json:\"internal\"`     //内部交易",
+          "type": "string"
+        },
+        "to": {
+          "description": "接收",
+          "type": "string"
+        }
+      }
+    },
+    "types.SuccessError": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "object"
+        }
+      }
+    },
+    "types.Token": {
+      "type": "object",
+      "properties": {
+        "expires_at": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "types.TotpBinding": {
+      "type": "object",
+      "required": [
+        "password",
+        "secret",
+        "totp_password"
+      ],
+      "properties": {
+        "password": {
+          "description": "登陆密码",
+          "type": "string"
+        },
+        "secret": {
+          "description": "Secret",
+          "type": "string"
+        },
+        "totp_password": {
+          "description": "totp密码",
+          "type": "string"
+        }
+      }
+    },
+    "types.Tx": {
+      "type": "object",
+      "properties": {
+        "app_id": {
+          "description": "APPID",
+          "type": "integer"
+        },
+        "blockchain": {
+          "description": "链名称",
+          "type": "string"
+        },
+        "contract": {
+          "description": "合约",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "创建时间",
+          "type": "string"
+        },
+        "from": {
+          "description": "发送着",
+          "type": "string"
+        },
+        "id": {
+          "description": "内部ID",
+          "type": "integer"
+        },
+        "notify": {
+          "description": "是否通知",
+          "type": "boolean"
+        },
+        "number": {
+          "description": "高度",
+          "type": "integer"
+        },
+        "symbol": {
+          "description": "符号",
+          "type": "string"
+        },
+        "time": {
+          "description": "时间",
+          "type": "integer"
+        },
+        "to": {
+          "description": "接收",
+          "type": "string"
+        },
+        "tx": {
+          "description": "哈希",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "更新时间",
+          "type": "string"
+        },
+        "value": {
+          "description": "数量",
+          "type": "string"
+        }
+      }
+    },
+    "types.TxData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "交易数组",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/types.Tx"
+          }
+        },
+        "success": {
+          "description": "是否成功",
+          "type": "boolean"
+        },
+        "total": {
+          "description": "总数",
+          "type": "integer"
+        }
+      }
+    },
+    "types.User": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "description": "创建时间",
+          "type": "string"
+        },
+        "email": {
+          "description": "邮箱",
+          "type": "string"
+        },
+        "email_verified_at": {
+          "description": "邮箱激活时间",
+          "type": "string"
+        },
+        "id": {
+          "description": "内部ID",
+          "type": "integer"
+        },
+        "name": {
+          "description": "名称",
+          "type": "string"
+        },
+        "password": {
+          "description": "密码",
+          "type": "string"
+        },
+        "phone_number": {
+          "description": "手机号",
+          "type": "string"
+        },
+        "phone_number_verified_at": {
+          "description": "手机号码激活时间",
+          "type": "string"
+        },
+        "security": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "boolean"
+            },
+            "password": {
+              "type": "boolean"
+            },
+            "phone_number": {
+              "type": "boolean"
+            },
+            "totp": {
+              "type": "boolean"
+            }
+          }
+        },
+        "updated_at": {
+          "description": "更新时间",
+          "type": "string"
+        }
+      }
+    },
+    "types.WalletSign": {
+      "type": "object",
+      "properties": {
+        "expires_at": {
+          "description": "签名有效期",
+          "type": "string"
+        },
+        "sign": {
+          "description": "签名",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "JWT": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
