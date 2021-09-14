@@ -1,4 +1,4 @@
-###  区块链冲币提币系统
+###  区块链充币提币系统
 
 支持：以太坊 ethereum, 币安 smartchain, 波场 tron, 火币heco 以及代币
 
