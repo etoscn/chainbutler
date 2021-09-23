@@ -1,6 +1,22 @@
 ###  区块链充币提币系统
 
-支持：以太坊 ethereum, 币安 smartchain, 波场 tron, 火币heco 以及代币
+1、支持：以太坊 ethereum, 币安 smartchain, 波场 tron, 火币heco 以及代币
+
+2、完整API
+
+3、支持内部交易（不支持跨应用）
+
+4、完整运营功能
+
+5、支持linux\windows\mac os
+
+6、不依赖任何环境
+
+7、服务端纯GO开发
+
+8、数据库加密
+
+9、完全私有化代币
 
 完整API
 
